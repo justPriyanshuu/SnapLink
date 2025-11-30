@@ -1,10 +1,12 @@
-import { registeruser } from '../services/auth.service.js';
+import { registerUser } from '../services/auth.service.js';
 
 export const signup = async (req, res) => {
   try {
+    console.log('controller received body:', req.body);
+
     const { firstname, lastname, email, password } = req.body;
 
-    const user = await registeruser({ firstname, lastname, email, password });
+    const user = await registerUser({ firstname, lastname, email, password });
 
     return res.status(201).json({
       message: 'user created',
