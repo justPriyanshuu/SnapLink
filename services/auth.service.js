@@ -2,6 +2,8 @@ import { db } from '../db/index.js';
 import { usersTable } from '../models/user.model.js';
 import { eq } from 'drizzle-orm';
 import bcrypt from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import 'dotenv/config';
 
 export const registerUser = async ({ firstname, lastname, email, password }) => {
   const [existingUser] = await db
@@ -31,4 +33,33 @@ export const registerUser = async ({ firstname, lastname, email, password }) => 
     .returning({ id: usersTable.id });
 
   return { id: user[0].id };
+};
+
+export const getUserByEmail = async (email, password) => {
+  const [user] = await db.select().from(usersTable).where(eq(usersTable.email, email));
+
+  if (!user) {
+    throw {
+      status: 404,
+      error: `User with email ${email} does not exist`,
+    };
+  }
+
+  const isMatch = await bcrypt.compare(password, user.password);
+
+  if (!isMatch) {
+    throw {
+      status: 400,
+      error: `Invalid Password`,
+    };
+  }
+
+  const token = jwt.sign(
+    {
+      id: user.id,
+    },
+    'process.env.JWT_TOKEN'
+  );
+
+  return { token };
 };
