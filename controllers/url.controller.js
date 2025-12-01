@@ -1,6 +1,7 @@
 import { db } from '../db/index.js';
 import { urlsTable } from '../models/urls.model.js';
 import { nanoid } from 'nanoid';
+import { eq } from 'drizzle-orm';
 
 export const shortenUrl = async (req, res) => {
   try {
@@ -43,4 +44,24 @@ export const shortenUrl = async (req, res) => {
     console.error('Error', err);
     return res.status(500).json({ error: 'Internal server error' });
   }
+};
+
+export const shortCode = async (req, res) => {
+  const code = req.params.shortCode;
+
+  const [result] = await db.select().from(urlsTable).where(eq(urlsTable.shortCode, code));
+
+  if (!result) {
+    return res.status(404).json({
+      error: 'Invalid Url',
+    });
+  }
+
+  return res.redirect(result.targetUrl);
+};
+
+export const allCode = async (req, res) => {
+  const code = await db.select().from(urlsTable).where(eq(urlsTable.userId, req.user.id));
+
+  return res.json({ code });
 };
