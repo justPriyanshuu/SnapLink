@@ -6,3 +6,4 @@ export const validate = (schema) => (req, res, next) => {
   req.body = parsed.data;
   next();
 };
+

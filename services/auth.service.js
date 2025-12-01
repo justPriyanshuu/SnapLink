@@ -58,7 +58,7 @@ export const getUserByEmail = async (email, password) => {
     {
       id: user.id,
     },
-    'process.env.JWT_TOKEN'
+    process.env.JWT_SECRET
   );
 
   return { token };
