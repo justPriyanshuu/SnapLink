@@ -19,15 +19,15 @@ SnapLink allows users to create short URLs, manage them, and track their own lin
 
 ## 🧱 Tech Stack
 
-| Category         | Technology             |
-| ---------------- | ---------------------- |
-| Language         | Node.js                |
-| Framework        | Express.js             |
-| Database         | PostgreSQL             |
-| ORM              | Drizzle ORM            |
-| Authentication   | JSON Web Tokens (JWT)  |
-| Hashing          | bcrypt                 |
+| Category         | Technology              |
+| ---------------- | ----------------------  |
+| Language         | Node.js                 |
+| Framework        | Express.js              |
+| Database         | PostgreSQL              |
+| ORM              | Drizzle ORM             |
+| Authentication   | JSON Web Tokens (JWT)   |
+| Hashing          | bcrypt                  |
 | Environment      | Docker + Docker Compose |
-| Testing Tool     | Postman                |
+| Testing Tool     | Postman                 |
 
 
